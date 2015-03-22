@@ -137,6 +137,13 @@ class ReviewController extends Controller
         }
         $review->setUserId($this->getUser());
 
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $entityManager->getRepository('ManateeCoreBundle:Listing');
+        /** @var \Manatee\CoreBundle\Entity\Listing $listing */
+        $listing = $repository->find($api->getParameter('listingId'));
+
+        $review->setListingId($listing);
+
         // Save changes
         $entityManager->persist($review);
         $entityManager->flush();
