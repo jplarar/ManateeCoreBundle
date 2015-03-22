@@ -224,6 +224,8 @@ ENDSQL;
         $row['country'] = $listingUser->getCountry();
         $row['city'] = $listingUser->getCity();
         $row['zipcode'] = $listingUser->getZipcode();
+        $row['category'] = $listing->getCategoryId()->getParent()->getCategoryId();
+        $row['subcategoryId'] = $listing->getCategoryId()->getCategoryId();
 
         if ($user){
             $row['phoneNumber'] = $user[0]['phoneNumber'];
