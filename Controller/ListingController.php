@@ -15,56 +15,6 @@ use Manatee\CoreBundle\Utility\ApiUtility;
  */
 class ListingController extends Controller
 {
-
-<<<<<<< HEAD
-=======
-        ## 1. Initialization
-        // Enable CORS in this API
-        $response = CorsUtility::createCorsResponse();
-        if (CorsUtility::requiresPreFlight($request)) {
-            return $response;
-        }
-
-        ## 2. Validate request
-        $api = new ApiUtility($request);
-
-        $error = $api->validateRequest();
-
-        // Return response
-        if($error)
-        {
-            $response = $api->generateErrorResponse($error);
-            return $response;
-        }
-
-        ## 3. Prepare information
-        /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Advertiser');
-
-        if ($api->hasParameter('userId')) {
-            $listings = $repository->findBy( array(
-                'userId' => $api->getParameter('userId')
-            ));
-        } else {
-            $listings = $this->getUser()->getListings();
-        }
-
-        if(!is_array($listings)){
-            $listings = array();
-        }
-
-        ## 4. Process info
-        $displayParams = array('listingId', 'name', 'content', 'area',
-            'schedule', 'price', 'formattedTimestamp');
-
-        $data = $api->generateData($listings, $displayParams);
-
-        ## 5. Return payload
-        $response = $api->generateResponse($data);
-        return $response;
-    }
-    
->>>>>>> origin/master
     /**
      * Generate new Listing
      *
