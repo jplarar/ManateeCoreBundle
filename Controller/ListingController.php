@@ -269,7 +269,7 @@ ENDSQL;
 
         ## 3. Process information
         /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('Manatee:Listing');
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Listing');
 
         // Create Query builder object
         $qb = $repository->createQueryBuilder('l');
