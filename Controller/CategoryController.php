@@ -59,13 +59,14 @@ class CategoryController extends Controller
                 $func = 'get' . ucfirst($p);
                 $row[$p] = $parent->$func();
             }
+            $row['children'] = array();
             foreach ($parent->getSubcategories() as $children) {
                 $row2 = array();
                 foreach ($displayParams as $p) {
                     $func = 'get' . ucfirst($p);
                     $row2[$p] = $children->$func();
                 }
-                $row['children']=$row2;
+                $row['children'][]=$row2;
             }
             $data[] = $row;
         }
