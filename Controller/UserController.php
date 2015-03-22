@@ -234,7 +234,7 @@ class UserController extends Controller
 
         ## 3. Prepare information
         /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Advertiser');
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Listings');
 
         if ($api->hasParameter('userId')) {
             $listings = $repository->findBy( array(
@@ -249,7 +249,7 @@ class UserController extends Controller
         }
 
         ## 4. Process info
-        $displayParams = array('advertiserId', 'name', 'content', 'area',
+        $displayParams = array('name', 'content', 'area',
             'schedule', 'price', 'formattedTimestamp');
 
         $data = $api->generateData($listings, $displayParams);
