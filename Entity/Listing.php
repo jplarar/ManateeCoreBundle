@@ -88,6 +88,7 @@ class Listing {
 
     public function __construct()
     {
+        $this->status = 'A';
         $this->reviews = new ArrayCollection();
         $this->pointLogs = new ArrayCollection();
     }
