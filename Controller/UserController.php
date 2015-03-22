@@ -234,7 +234,7 @@ class UserController extends Controller
 
         ## 3. Prepare information
         /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Listings');
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Listing');
 
         if ($api->hasParameter('userId')) {
             $listings = $repository->findBy( array(
