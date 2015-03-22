@@ -137,7 +137,7 @@ class ListingController extends Controller
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('name', 'content', 'area', 'schedule', 'price');
+        $displayParams = array('listingId', 'name', 'content', 'area', 'schedule', 'price');
         $data = $api->generateData(array($listing), $displayParams);
 
         ## 5. Return payload
@@ -181,11 +181,14 @@ class ListingController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
 
         /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $entityManager->getRepository('ManateeCoreBundle:Category');
+        $repository = $entityManager->getRepository('ManateeCoreBundle:Listing');
         /** @var \Manatee\CoreBundle\Entity\Listing $listing */
         $listing = $repository->find($api->getParameter('listingId'));
 
-
+        if (!$listing) {
+            $response = $api->generateErrorResponse(6);
+            return $response;
+        }
 
         ## 4. Display information
         $displayParams = array('name', 'content', 'area', 'schedule', 'price');
