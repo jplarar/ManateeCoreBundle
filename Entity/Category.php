@@ -23,6 +23,11 @@ class Category {
      */
     protected $name;
 
+    /**
+     * @ORM\Column(type="string", nullable=TRUE)
+     */
+    protected $imageUrl;
+
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
@@ -70,6 +75,26 @@ class Category {
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get imageUrl
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * Set imageUrl
+     * @param string $imageUrl
+     * @return Category
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
         return $this;
     }
 

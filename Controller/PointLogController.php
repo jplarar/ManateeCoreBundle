@@ -35,7 +35,7 @@ class PointLogController extends Controller
         $api = new ApiUtility($request);
 
         // Obligatory parameters needed for this operation to succeed.
-        $requestParameters = array('listingId', 'userId');
+        $requestParameters = array('listingId');
 
         $error = $api->validateRequest($requestParameters);
         // Return response
@@ -53,19 +53,20 @@ class PointLogController extends Controller
         $repository = $entityManager->getRepository('ManateeCoreBundle:Listing');
         /** @var \Manatee\CoreBundle\Entity\Listing $listing */
         $listing = $repository->find($api->getParameter('listingId'));
-        /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $entityManager->getRepository('ManateeCoreBundle:User');
-        /** @var \Manatee\CoreBundle\Entity\User $user */
-        $user = $repository->find($api->getParameter('userId'));
 
-        //TODO: Check credits before buy
+        if ($this->getUser()->getCredits() < $listing->getPrice()) {
+            $response = $api->generateErrorResponse(14);
+            return $response;
+        }
 
-        $pointLog->setUserId($user);
+        $pointLog->setUserId($this->getUser());
         $pointLog->setListingId($listing);
         $pointLog->setAmount($listing->getPrice());
 
-        $userBalance = $user->getCredits();
-        $user->setCredit($userBalance - $listing->getPrice());
+        $this->getUser()->payCredits($listing->getPrice());
+
+        $sellingUser = $listing->getUserId();
+        $sellingUser->addCredits($listing->getPrice());
 
         // Save changes
         $entityManager->persist($pointLog);

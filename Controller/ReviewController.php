@@ -147,4 +147,73 @@ class ReviewController extends Controller
         return $response;
     }
 
+    /**
+     * List user reviews
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function userAction(Request $request)
+    {
+
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
+
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        $error = $api->validateRequest();
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Prepare information
+
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Review');
+        if ($api->hasParameter('userId')) {
+            $reviews = $repository->findBy(array(
+                'userId' => $api->getParameter('userId')
+            ));
+        } else {
+            $reviews = $repository->findBy(array(
+                'userId' => $this->getUser()->getUserId()
+            ));
+        }
+
+        if(!is_array($reviews)){
+            $reviews = array();
+        }
+
+        ## 4. Process info
+        $displayParams = array('content', 'rating');
+        $data = array();
+
+        /** @var Review $review */
+        foreach ($reviews as $review) {
+            $row = array();
+
+            // Normal attributes
+            foreach ($displayParams as $p) {
+                $func = 'get' . ucfirst($p);
+                $row[$p] = $review->$func();
+            }
+            $listingUser = $review->getUserId();
+            $row['fullName'] = $listingUser->getFullName();
+            $data[] = $row;
+        }
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
+
 }

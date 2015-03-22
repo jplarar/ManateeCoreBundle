@@ -499,13 +499,24 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set credits
+     * Add credits
      * @param integer $credits
      * @return User
      */
-    public function setCredit($credits)
+    public function addCredits($credits)
     {
-        $this->credits = $credits;
+        $this->credits = $this->credits + $credits;
+        return $this;
+    }
+
+    /**
+     * pay credits
+     * @param integer $credits
+     * @return User
+     */
+    public function PayCredits($credits)
+    {
+        $this->credits = $this->credits - $credits;
         return $this;
     }
 
