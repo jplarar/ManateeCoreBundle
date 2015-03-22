@@ -35,7 +35,7 @@ class UserController extends Controller
 
         // Obligatory parameters needed for this operation to succeed.
         $requestParameters = array('password', 'fullName', 'email', 'phoneNumber', 'country', 'city',
-            'zipcode', 'skype');
+            'zipcode');
 
         $error = $api->validateRequest($requestParameters);
         // Return response
@@ -54,8 +54,10 @@ class UserController extends Controller
             'zipcode', 'skype');
         foreach ($updateParameters as $p)
         {
-            $func = 'set' . ucfirst($p);
-            $user->$func($api->getParameter($p));
+            if ($api->hasParameter($p)) {
+                $func = 'set' . ucfirst($p);
+                $user->$func($api->getParameter($p));
+            }
         }
 
         // Special parameters
