@@ -224,7 +224,7 @@ ENDSQL;
         $row['city'] = $listingUser->getCity();
         $row['zipcode'] = $listingUser->getZipcode();
 
-        if ($user[0]){
+        if ($user){
             $row['phoneNumber'] = $user[0]['phoneNumber'];
             $row['email'] = $user[0]['email'];
             $row['skype'] = $user[0]['skype'];
