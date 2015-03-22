@@ -214,7 +214,7 @@ WHERE pl.userId = :userId
 ENDSQL;
 
         $stmt = $entityManager->getConnection()->prepare($sql);
-        $stmt->bindValue('listingId', $this->getUser()->getUserId());
+        $stmt->bindValue('userId', $this->getUser()->getUserId());
         $stmt->execute();
         $user = $stmt->fetchAll();
 
