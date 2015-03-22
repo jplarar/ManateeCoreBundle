@@ -1,6 +1,6 @@
 <?php
 
-namespace Manatee\CoreBundle\Entity;
+namespace Manatee\CoreBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
