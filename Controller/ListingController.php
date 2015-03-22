@@ -151,7 +151,7 @@ class ListingController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function partialViewAction(Request $request)
+    public function viewAction(Request $request)
     {
         ## 1. Initialization
         // Enable CORS in this API
@@ -176,6 +176,8 @@ class ListingController extends Controller
         }
 
         ## 3. Process information
+
+        /* @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getDoctrine()->getManager();
 
         /* @var \Doctrine\ORM\EntityRepository $repository */
@@ -197,75 +199,33 @@ class ListingController extends Controller
             $func = 'get' . ucfirst($p);
             $row[$p] = $listing->$func();
         }
+
+        // Execute the main query
+        $sql = <<<ENDSQL
+SELECT
+	u.phoneNumber, u.email, u.skype
+FROM Users as u
+INNER JOIN Listings as l ON l.userId = u.userId
+INNER JOIN PointLogs as pl ON pl.listingId = l.listingId
+WHERE pl.userId = :userId
+ENDSQL;
+
+        $stmt = $entityManager->getConnection()->prepare($sql);
+        $stmt->bindValue('listingId', $this->getUser()->getUserId());
+        $stmt->execute();
+        $user = $stmt->fetchAll();
+
         $listingUser = $listing->getUserId();
         $row['fullName'] = $listingUser->getFullName();
         $row['country'] = $listingUser->getCountry();
         $row['city'] = $listingUser->getCity();
         $row['zipcode'] = $listingUser->getZipcode();
 
-        ## 5. Return payload
-        $response = $api->generateResponse($data);
-        return $response;
-    }
-
-    /**
-     * Specific Listing entity with user data
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function completeViewAction(Request $request)
-    {
-        ## 1. Initialization
-        // Enable CORS in this API
-        $response = CorsUtility::createCorsResponse();
-        if (CorsUtility::requiresPreFlight($request)) {
-            return $response;
+        if ($user[0]){
+            $row['phoneNumber'] = $user[0]['phoneNumber'];
+            $row['email'] = $user[0]['email'];
+            $row['skype'] = $user[0]['skype'];
         }
-
-        ## 2. Validate request
-        $api = new ApiUtility($request);
-
-        // Obligatory parameters needed for this operation to succeed.
-        $requestParameters = array('listingId');
-
-        $error = $api->validateRequest($requestParameters);
-
-        // Return response
-        if($error)
-        {
-            $response = $api->generateErrorResponse($error);
-            return $response;
-        }
-
-        ## 3. Process information
-        $entityManager = $this->getDoctrine()->getManager();
-
-        /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $entityManager->getRepository('ManateeCoreBundle:Category');
-        /** @var \Manatee\CoreBundle\Entity\Listing $listing */
-        $listing = $repository->find($api->getParameter('listingId'));
-
-        ## 4. Display information
-        $displayParams = array('name', 'content', 'area', 'schedule', 'price');
-        $data = array();
-
-        $row = array();
-
-        // Normal attributes
-        foreach($displayParams as $p)
-        {
-            $func = 'get' . ucfirst($p);
-            $row[$p] = $listing->$func();
-        }
-        $listingUser = $listing->getUserId();
-        $row['fullName'] = $listingUser->getFullName();
-        $row['country'] = $listingUser->getCountry();
-        $row['city'] = $listingUser->getCity();
-        $row['zipcode'] = $listingUser->getZipcode();
-        $row['phoneNumber'] = $listingUser->getPhoneNumber();
-        $row['email'] = $listingUser->getEmail();
-        $row['skype'] = $listingUser->getSkype();
 
         $data[] = $row;
 

@@ -61,6 +61,11 @@ manatee_api_listing_view:
     pattern:    /api/listing/view
     defaults:   { _controller: ManateeCoreBundle:Listing:view }
 
+# Search
+manatee_api_listing_search:
+    pattern:    /api/listing/search
+    defaults:   { _controller: ManateeCoreBundle:Listing:search }
+
 ## PointLog
 
 # New
