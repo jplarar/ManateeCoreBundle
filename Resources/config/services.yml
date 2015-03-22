@@ -1,5 +1,5 @@
 parameters:
-#    niva_wolf_core.example.class: Niva\Wolf\CoreBundle\Example
+#    manatee_core.example.class: Manatee\CoreBundle\Example
 
 
 services:
@@ -9,4 +9,4 @@ services:
 
     manatee_core.api_key_authenticator:
         class: Manatee\CoreBundle\Security\ApiKeyAuthenticator
-        arguments: ["@niva_wolf_core.api_key_user_provider"]
+        arguments: ["@manatee_core.api_key_user_provider"]
