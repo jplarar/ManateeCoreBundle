@@ -84,3 +84,10 @@ manatee_api_review_list:
 manatee_api_review_new:
     pattern:    /api/review/new
     defaults:   { _controller: ManateeCoreBundle:Review:new }
+
+## Category
+
+# List
+manatee_api_category_list:
+    pattern:    /api/category/list
+    defaults:   { _controller: ManateeCoreBundle:Category:list }
