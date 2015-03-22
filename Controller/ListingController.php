@@ -210,11 +210,12 @@ SELECT
 FROM Users as u
 INNER JOIN Listings as l ON l.userId = u.userId
 INNER JOIN PointLogs as pl ON pl.listingId = l.listingId
-WHERE pl.userId = :userId
+WHERE pl.userId = :userId AND l.listingId = :listingId
 ENDSQL;
 
         $stmt = $entityManager->getConnection()->prepare($sql);
         $stmt->bindValue('userId', $this->getUser()->getUserId());
+        $stmt->bindValue('listingId', $api->getParameter('listingId'));
         $stmt->execute();
         $user = $stmt->fetchAll();
 
