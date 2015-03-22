@@ -34,7 +34,7 @@ class UserController extends Controller
         $api = new ApiUtility($request);
 
         // Obligatory parameters needed for this operation to succeed.
-        $requestParameters = array('username', 'password', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+        $requestParameters = array('password', 'fullName', 'email', 'phoneNumber', 'country', 'city',
             'zipcode', 'skype');
 
         $error = $api->validateRequest($requestParameters);
@@ -50,7 +50,7 @@ class UserController extends Controller
         $user = new User();
 
         // Parse parameters
-        $updateParameters = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+        $updateParameters = array('fullName', 'email', 'phoneNumber', 'country', 'city',
             'zipcode', 'skype');
         foreach ($updateParameters as $p)
         {
@@ -71,7 +71,7 @@ class UserController extends Controller
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+        $displayParams = array('fullName', 'email', 'phoneNumber', 'country', 'city',
             'zipcode', 'skype');
         $data = $api->generateData(array($user), $displayParams);
 
@@ -140,7 +140,7 @@ class UserController extends Controller
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+        $displayParams = array('fullName', 'email', 'phoneNumber', 'country', 'city',
             'zipcode', 'skype');
         $data = $api->generateData(array($user), $displayParams);
 
@@ -187,10 +187,10 @@ class UserController extends Controller
                 $response = $api->generateErrorResponse(6);
                 return $response;
             }
-            $displayParams = array('username', 'fullName', 'country', 'city', 'zipcode');
+            $displayParams = array('fullName', 'country', 'city', 'zipcode');
         } else {
             $user = $this->getUser();
-            $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+            $displayParams = array('fullName', 'email', 'phoneNumber', 'country', 'city',
                 'zipcode', 'skype');
         }
 

@@ -51,7 +51,7 @@ class SecurityController extends Controller
         ## 3. Authenticate user
         /** @var \Manatee\CoreBundle\Entity\User $user */
         $user = $this->getDoctrine()->getRepository('ManateeCoreBundle:User')
-        ->findOneBy(array('username' => $api->getParameter('_username')));
+        ->findOneBy(array('email' => $api->getParameter('_username')));
 
         if(!$user)
         {

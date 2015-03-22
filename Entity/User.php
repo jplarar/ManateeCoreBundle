@@ -21,11 +21,6 @@ class User implements UserInterface, \Serializable
     protected $userId;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=TRUE)
-     */
-    protected $username;
-
-    /**
      * @ORM\Column(type="string", length=32)
      */
     private $salt;
@@ -46,7 +41,7 @@ class User implements UserInterface, \Serializable
     private $fullName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=TRUE)
      */
     private $email;
 
@@ -152,7 +147,7 @@ class User implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->username;
+        return $this->email;
     }
 
     /**
@@ -204,7 +199,7 @@ class User implements UserInterface, \Serializable
             return false;
         }
 
-        if ($this->username !== $user->getUsername()) {
+        if ($this->email !== $user->getUsername()) {
             return false;
         }
 
@@ -253,19 +248,6 @@ class User implements UserInterface, \Serializable
     public function getUserId()
     {
         return $this->userId;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
     }
 
     /**
