@@ -1,0 +1,81 @@
+### Users's API
+
+## Security
+
+# Login
+manatee_api_login:
+    pattern:    /api/login
+    defaults:   { _controller: ManateeCoreBundle:Security:login }
+
+# Logout
+manatee_api_logout:
+    pattern:    /api/logout
+    defaults:   { _controller: ManateeCoreBundle:Security:logout }
+
+# validate
+manatee_api_valid:
+    pattern:    /api/validate
+    defaults:   { _controller: ManateeCoreBundle:Security:valid }
+
+## User
+
+# New
+manatee_api_user_new:
+    pattern:    /api/user/new
+    defaults:   { _controller: ManateeCoreBundle:User:new }
+
+# Edit
+manatee_api_user_edit:
+    pattern:    /api/user/edit
+    defaults:   { _controller: ManateeCoreBundle:User:edit }
+
+# View
+manatee_api_user_view:
+    pattern:    /api/user/view
+    defaults:   { _controller: ManateeCoreBundle:User:view }
+
+# Listings
+manatee_api_user_listings:
+    pattern:    /api/user/listings
+    defaults:   { _controller: ManateeCoreBundle:User:listings }
+
+# Reviews
+manatee_api_user_reviews:
+    pattern:    /api/user/reviews
+    defaults:   { _controller: ManateeCoreBundle:User:reviews }
+
+## Listing
+
+# New
+manatee_api_listing_new:
+    pattern:    /api/listing/new
+    defaults:   { _controller: ManateeCoreBundle:Listing:new }
+
+# Edit
+manatee_api_listing_edit:
+    pattern:    /api/listing/edit
+    defaults:   { _controller: ManateeCoreBundle:Listing:edit }
+
+# View
+manatee_api_listing_view:
+    pattern:    /api/listing/view
+    defaults:   { _controller: ManateeCoreBundle:Listing:view }
+
+## PointLog
+
+# New
+manatee_api_pointlog_new:
+    pattern:    /api/pointlog/new
+    defaults:   { _controller: ManateeCoreBundle:PointLog:new }
+
+## Review
+
+# List
+manatee_api_review_list:
+    pattern:    /api/review/list
+    defaults:   { _controller: ManateeCoreBundle:Review:list }
+
+# New
+manatee_api_review_new:
+    pattern:    /api/review/new
+    defaults:   { _controller: ManateeCoreBundle:Review:new }

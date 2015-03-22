@@ -202,4 +202,128 @@ class UserController extends Controller
         return $response;
     }
 
+    /**
+     * List user listings records
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function userListingsAction(Request $request)
+    {
+
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
+
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        $error = $api->validateRequest();
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Prepare information
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Advertiser');
+
+        if ($api->hasParameter('userId')) {
+            $listings = $repository->findBy( array(
+                'userId' => $api->getParameter('userId')
+            ));
+        } else {
+            $listings = $this->getUser()->getListings();
+        }
+
+        if(!is_array($listings)){
+            $listings = array();
+        }
+
+        ## 4. Process info
+        $displayParams = array('advertiserId', 'name', 'content', 'area',
+            'schedule', 'price', 'formattedTimestamp');
+
+        $data = $api->generateData($listings, $displayParams);
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
+
+    /**
+     * List user reviews
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function reviewsAction(Request $request)
+    {
+
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
+
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        $error = $api->validateRequest();
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Prepare information
+
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Review');
+        if ($api->hasParameter('userId')) {
+            $reviews = $repository->findBy(array(
+                'userId' => $api->getParameter('userId')
+            ));
+        } else {
+            $reviews = $repository->findBy(array(
+                'userId' => $this->getUser()->getUserId()
+            ));
+        }
+
+        if(!is_array($reviews)){
+            $reviews = array();
+        }
+
+        ## 4. Process info
+        $displayParams = array('content', 'rating');
+        $data = array();
+
+        /** @var \Manatee\CoreBundle\Entity\Review $review */
+        foreach ($reviews as $review) {
+            $row = array();
+
+            // Normal attributes
+            foreach ($displayParams as $p) {
+                $func = 'get' . ucfirst($p);
+                $row[$p] = $review->$func();
+            }
+            $listingUser = $review->getUserId();
+            $row['fullName'] = $listingUser->getFullName();
+            $data[] = $row;
+        }
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
+
 }
