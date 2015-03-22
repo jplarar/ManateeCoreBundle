@@ -46,7 +46,7 @@ class LeaderboardController extends Controller
 
         $sql = <<<ENDSQL
 SELECT
-	COUNT(*), l.listingId, l.name
+	COUNT(*) as buys, l.listingId, l.name
 FROM Listings as l
 INNER JOIN PointLogs as pl ON pl.listingId = l.listingId
 WHERE pl.listingId IS NOT NULL
@@ -98,7 +98,7 @@ ENDSQL;
 
         $sql = <<<ENDSQL
 SELECT
-	COUNT(*), u.userId, u.fullName
+	COUNT(*) buys, u.userId, u.fullName
 FROM Users as u
 INNER JOIN PointLogs as pl ON pl.userId = u.userId
 WHERE pl.listingId IS NOT NULL
