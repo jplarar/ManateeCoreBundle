@@ -1,0 +1,44 @@
+{
+    "name": "manatee/core-bundle",
+    "description": "Core and API module for Manatee's platform.",
+    "type": "symfony-bundle",
+    "keywords": [
+        "manatee",
+        "corebundle"
+    ],
+    "homepage": "https://github.com/jplarar/ManateeCoreBundle",
+    "license": "",
+    "authors": [
+        {
+            "name": "Alejandro Hernández",
+            "email": "me@alexhdz.com",
+            "homepage": "http://www.alexhdz.com",
+            "role": "creator,manager,architect,developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "symfony/config": "~2.1",
+        "symfony/dependency-injection": "~2.1",
+        "symfony/filesystem": "~2.1",
+        "symfony/form": "~2.1",
+        "symfony/framework-bundle": "~2.1",
+        "symfony/http-foundation": "~2.1",
+        "symfony/http-kernel": "~2.1",
+        "symfony/monolog-bundle": "~2.1",
+        "symfony/options-resolver": "~2.1",
+        "symfony/security": "~2.1",
+        "symfony/validator": "~2.1",
+        "sensio/framework-extra-bundle": "~2.1"
+    },
+    "suggest": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": {
+            "Manatee\\CoreBundle": ""
+        }
+    },
+    "target-dir": "Manatee/CoreBundle"
+}
