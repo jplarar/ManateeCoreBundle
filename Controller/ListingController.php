@@ -69,7 +69,7 @@ class ListingController extends Controller
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('name', 'content', 'area', 'schedule', 'price');
+        $displayParams = array('listingId', 'name', 'content', 'area', 'schedule', 'price');
         $data = $api->generateData(array($listing), $displayParams);
 
         ## 5. Return payload
