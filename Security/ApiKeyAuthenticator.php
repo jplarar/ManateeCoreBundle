@@ -1,7 +1,6 @@
 <?php
 
-namespace Manatee\CoreBundle\Entity;
-
+namespace Manatee\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;

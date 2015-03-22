@@ -1,6 +1,6 @@
 <?php
 
-namespace Manatee\CoreBundle\Entity;
+namespace Manatee\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
