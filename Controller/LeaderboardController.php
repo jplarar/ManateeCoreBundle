@@ -60,7 +60,7 @@ ENDSQL;
         ## 4. Display information
         $data = array();
         if ($topUsers) {
-            $data[] = $topUsers[0];
+            $data = $topUsers[0];
         }
 
         ## 3. Return payload
@@ -114,7 +114,7 @@ ENDSQL;
         ## 4. Display information
         $data = array();
         if ($topUsers) {
-            $data[] = $topUsers[0];
+            $data = $topUsers[0];
         }
 
         ## 5. Return payload
