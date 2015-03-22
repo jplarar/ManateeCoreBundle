@@ -219,6 +219,7 @@ ENDSQL;
         $user = $stmt->fetchAll();
 
         $listingUser = $listing->getUserId();
+        $row['userId'] = $listingUser->getUserId();
         $row['fullName'] = $listingUser->getFullName();
         $row['country'] = $listingUser->getCountry();
         $row['city'] = $listingUser->getCity();

@@ -203,7 +203,7 @@ class UserController extends Controller
         } else {
             $user = $this->getUser();
             $displayParams = array('fullName', 'email', 'phoneNumber', 'country', 'city',
-                'zipcode', 'skype');
+                'zipcode', 'skype', 'credits');
         }
 
         ## 4. Display information
