@@ -261,7 +261,7 @@ class UserController extends Controller
 
 
         ## 4. Process info
-        $displayParams = array('name', 'content', 'area',
+        $displayParams = array('listingId', 'name', 'content', 'area',
             'schedule', 'price', 'formattedTimestamp');
 
         $data = $api->generateData($listings, $displayParams);
