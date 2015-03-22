@@ -67,7 +67,7 @@ ENDSQL;
         $response = $api->generateResponse($data);
         return $response;
     }
-
+    
     /**
      * Modify existing Listing
      *
