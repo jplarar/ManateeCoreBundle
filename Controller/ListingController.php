@@ -16,6 +16,55 @@ use Manatee\CoreBundle\Utility\ApiUtility;
 class ListingController extends Controller
 {
 
+<<<<<<< HEAD
+=======
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
+
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        $error = $api->validateRequest();
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Prepare information
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('ManateeCoreBundle:Advertiser');
+
+        if ($api->hasParameter('userId')) {
+            $listings = $repository->findBy( array(
+                'userId' => $api->getParameter('userId')
+            ));
+        } else {
+            $listings = $this->getUser()->getListings();
+        }
+
+        if(!is_array($listings)){
+            $listings = array();
+        }
+
+        ## 4. Process info
+        $displayParams = array('listingId', 'name', 'content', 'area',
+            'schedule', 'price', 'formattedTimestamp');
+
+        $data = $api->generateData($listings, $displayParams);
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
+    
+>>>>>>> origin/master
     /**
      * Generate new Listing
      *
@@ -269,6 +318,61 @@ class ListingController extends Controller
         $row['skype'] = $listingUser->getSkype();
 
         $data[] = $row;
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
+
+    /**
+     * Search Listing by keywords
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function searchAction(Request $request)
+    {
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
+
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        // Obligatory parameters needed for this operation to succeed.
+        $requestParameters = array('q');
+
+        $error = $api->validateRequest($requestParameters);
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Process information
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('Manatee:Listing');
+
+        // Create Query builder object
+        $qb = $repository->createQueryBuilder('l');
+        $qb
+            ->innerJoin('l.categoryId', 'c')
+            ->where('l.name LIKE :search OR l.content LIKE :search OR c.name LIKE :search')
+            ->setParameter('search', '%' . $api->getParameter('q') . '%')
+            ->orderBy('l.timestamp', 'ASC');
+
+        $listings = $qb->getQuery()->getResult();
+
+        ## 4. Process info
+        $displayParams = array('listingId', 'name', 'content', 'area',
+            'schedule', 'price', 'formattedTimestamp');
+
+        $data = $api->generateData($listings, $displayParams);
 
         ## 5. Return payload
         $response = $api->generateResponse($data);

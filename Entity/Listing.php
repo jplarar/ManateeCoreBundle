@@ -77,6 +77,11 @@ class Listing {
      */
     protected $reviews;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PointLog", mappedBy="listingId")
+     */
+    protected $pointLogs;
+
     #########################
     ##      CONSTRUCTOR    ##
     #########################
@@ -84,6 +89,7 @@ class Listing {
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->pointLogs = new ArrayCollection();
     }
 
     #########################
@@ -327,6 +333,38 @@ class Listing {
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+     * Add point log
+     *
+     * @param PointLog $pointLog
+     * @return Listing
+     */
+    public function addPointLog(PointLog $pointLog)
+    {
+        $this->pointLogs[] = $pointLog;
+        return $this;
+    }
+
+    /**
+     * Remove pointLog
+     *
+     * @param PointLog $pointLog
+     */
+    public function removePointLog(PointLog $pointLog)
+    {
+        $this->pointLogs->removeElement($pointLog);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPointLogs()
+    {
+        return $this->pointLogs;
     }
 
 }

@@ -95,7 +95,7 @@ class User implements UserInterface, \Serializable
     #########################
 
     /**
-     * @ORM\OneToMany(targetEntity="PointLogs", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="PointLog", mappedBy="userId")
      */
     protected $pointLogs;
 

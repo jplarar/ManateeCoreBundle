@@ -32,8 +32,8 @@ class PointLog {
     #########################
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="pointLogs")
-     * @ORM\JoinColumn(name="listingId", referencedColumnName="listingId", nullable=FALSE)
+     * @ORM\ManyToOne(targetEntity="Listing", inversedBy="pointLogs")
+     * @ORM\JoinColumn(name="listingId", referencedColumnName="listingId", nullable=TRUE)
      */
     protected $listingId;
 
