@@ -284,9 +284,25 @@ ENDSQL;
 
         ## 4. Process info
         $displayParams = array('listingId', 'name', 'content', 'area',
-            'schedule', 'price', 'formattedTimestamp');
+            'schedule', 'price', 'formattedTimestamp', 'categoryId');
 
-        $data = $api->generateData($listings, $displayParams);
+        $data = array();
+
+        /** @var Listing $listing */
+        foreach ($listings as $listing)
+        {
+            $row = array();
+
+            // Normal attributes
+            foreach($displayParams as $p)
+            {
+                $func = 'get' . ucfirst($p);
+                $row[$p] = $listing->$func();
+            }
+            $row['subcategoryId'] = $listing->getCategoryId()->getCategoryId();
+            $row['categoryId'] =$listing->getCategoryId()->getParent()->getCategoryId();
+            $data[] = $row;
+        }
 
         ## 5. Return payload
         $response = $api->generateResponse($data);
