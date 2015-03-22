@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="Users", indexes={@ORM\Index(name="user_idx", columns={"username"})})
+ * @ORM\Table(name="Users", indexes={@ORM\Index(name="user_idx", columns={"email"})})
  */
 class User implements UserInterface, \Serializable
 {
