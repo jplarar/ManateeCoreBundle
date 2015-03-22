@@ -45,7 +45,7 @@ class CategoryController extends Controller
         /* @var \Doctrine\ORM\EntityRepository $repository */
         $repository = $entityManager->getRepository('ManateeCoreBundle:Category');
         $query = $repository->createQueryBuilder('c')
-            ->where('c.parent IS NOT NULL')
+            ->where('c.parent IS NULL')
             ->getQuery();
 
         $parents = $query->getResult();
