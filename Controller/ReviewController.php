@@ -163,6 +163,8 @@ class ReviewController extends Controller
         $listingUser = $review->getUserId();
         $row['fullName'] = $listingUser->getFullName();
 
+        $data[] = $row;
+
         ## 5. Return payload
         $response = $api->generateResponse($data);
         return $response;
