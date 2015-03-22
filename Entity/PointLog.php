@@ -124,7 +124,7 @@ class PointLog {
 
     /**
      * Get ListingId
-     * @return \Niva\Wolf\CoreBundle\Entity\Segment
+     * @return \Manatee\CoreBundle\Entity\Listing
      */
     public function getListingId()
     {
@@ -133,7 +133,7 @@ class PointLog {
 
     /**
      * Set ListingId
-     * @param \Niva\Wolf\CoreBundle\Entity\Segment $listingId
+     * @param \Manatee\CoreBundle\Entity\Listing $listingId
      * @return PointLog
      */
     public function setListingId($listingId)
@@ -144,7 +144,7 @@ class PointLog {
 
     /**
      * Get UserId
-     * @return \Niva\Wolf\CoreBundle\Entity\Advertiser
+     * @return \Manatee\CoreBundle\Entity\User
      */
     public function getUserId()
     {
@@ -153,7 +153,7 @@ class PointLog {
 
     /**
      * Set UserId
-     * @param \Niva\Wolf\CoreBundle\Entity\Advertiser $userId
+     * @param \Manatee\CoreBundle\Entity\User $userId
      * @return PointLog
      */
     public function setUserId($userId)

@@ -155,7 +155,7 @@ class Review {
 
     /**
      * Get ListingId
-     * @return \Niva\Wolf\CoreBundle\Entity\Segment
+     * @return \Manatee\CoreBundle\Entity\Listing
      */
     public function getListingId()
     {
@@ -164,7 +164,7 @@ class Review {
 
     /**
      * Set ListingId
-     * @param \Niva\Wolf\CoreBundle\Entity\Segment $listingId
+     * @param \Manatee\CoreBundle\Entity\Listing $listingId
      * @return Review
      */
     public function setListingId($listingId)
@@ -175,7 +175,7 @@ class Review {
 
     /**
      * Get UserId
-     * @return \Niva\Wolf\CoreBundle\Entity\Advertiser
+     * @return \Manatee\CoreBundle\Entity\User
      */
     public function getUserId()
     {
@@ -184,7 +184,7 @@ class Review {
 
     /**
      * Set UserId
-     * @param \Niva\Wolf\CoreBundle\Entity\Advertiser $userId
+     * @param \Manatee\CoreBundle\Entity\User $userId
      * @return Review
      */
     public function setUserId($userId)

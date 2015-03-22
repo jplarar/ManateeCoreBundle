@@ -34,8 +34,8 @@ class ApiKeyUserProvider implements UserProviderInterface
      */
     public function getUsernameForApiKey($apiKey)
     {
-        /** @var \Niva\Wolf\CoreBundle\Entity\SessionLog $session */
-        $session = $this->doctrine->getRepository("NivaWolfCoreBundle:SessionLog")->findOneBy(array(
+        /** @var \Manatee\CoreBundle\Entity\SessionLog $session */
+        $session = $this->doctrine->getRepository("ManateeCoreBundle:SessionLog")->findOneBy(array(
             'apiKey' => $apiKey
         ));
 
@@ -53,8 +53,8 @@ class ApiKeyUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        /** @var \Niva\Wolf\CoreBundle\Entity\User $user */
-        $user = $this->doctrine->getRepository("NivaWolfCoreBundle:User")->findOneBy(array(
+        /** @var \Manatee\CoreBundle\Entity\User $user */
+        $user = $this->doctrine->getRepository("ManateeCoreBundle:User")->findOneBy(array(
             'username' => $username
         ));
 
@@ -84,6 +84,6 @@ class ApiKeyUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return 'Niva\Wolf\CoreBundle\Entity\User' === $class;
+        return 'Manatee\CoreBundle\Entity\User' === $class;
     }
 }

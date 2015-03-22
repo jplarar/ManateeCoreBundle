@@ -231,7 +231,7 @@ class Listing {
 
     /**
      * Get CategoryId
-     * @return \Niva\Wolf\CoreBundle\Entity\Segment
+     * @return \Manatee\CoreBundle\Entity\Segment
      */
     public function getCategoryId()
     {
@@ -240,7 +240,7 @@ class Listing {
 
     /**
      * Set CategoryId
-     * @param \Niva\Wolf\CoreBundle\Entity\Segment $categoryId
+     * @param \Manatee\CoreBundle\Entity\Category $categoryId
      * @return Listing
      */
     public function setCategoryId($categoryId)
@@ -251,7 +251,7 @@ class Listing {
 
     /**
      * Get UserId
-     * @return \Niva\Wolf\CoreBundle\Entity\Advertiser
+     * @return \Manatee\CoreBundle\Entity\User
      */
     public function getUserId()
     {
@@ -260,7 +260,7 @@ class Listing {
 
     /**
      * Set UserId
-     * @param \Niva\Wolf\CoreBundle\Entity\Advertiser $userId
+     * @param \Manatee\CoreBundle\Entity\User $userId
      * @return Listing
      */
     public function setUserId($userId)
