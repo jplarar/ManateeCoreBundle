@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use Niva\Wolf\CoreBundle\Utility\CorsUtility;
-use Niva\Wolf\CoreBundle\Utility\ApiUtility;
-use Niva\Wolf\CoreBundle\Utility\GuidUtility;
-use Niva\Wolf\CoreBundle\Entity\SessionLog;
+use Manatee\CoreBundle\Utility\CorsUtility;
+use Manatee\CoreBundle\Utility\ApiUtility;
+use Manatee\CoreBundle\Utility\GuidUtility;
+use Manatee\CoreBundle\Entity\SessionLog;
 
 /**
  * Class SecurityController
