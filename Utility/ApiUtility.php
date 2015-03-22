@@ -1,6 +1,6 @@
 <?php
 
-namespace Manatee\CoreBundle\Entity;
+namespace Manatee\CoreBundle\Utility;
 
 use Symfony\Component\HttpFoundation\Request;
 

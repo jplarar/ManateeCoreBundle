@@ -117,6 +117,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->credits = 60;
         $this->salt = md5(uniqid(null, true));
         $this->pointLogs = new ArrayCollection();
         $this->listings = new ArrayCollection();
