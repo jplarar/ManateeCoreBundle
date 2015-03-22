@@ -118,6 +118,7 @@ class User implements UserInterface, \Serializable
     {
         $this->isActive = true;
         $this->credits = 60;
+        $this->role = 'ROLE_USER';
         $this->salt = md5(uniqid(null, true));
         $this->pointLogs = new ArrayCollection();
         $this->listings = new ArrayCollection();

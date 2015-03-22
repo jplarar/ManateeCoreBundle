@@ -167,16 +167,78 @@ class Category {
     #########################
 
     /**
-     * Get human readable route (First Level)
-     * @return string
+     * Return the array as a simple 1D array with the relationships as text
+     * to be displayed in a dropdown box
+     *
+     * @param $categoriesAsTree
+     * @param string $separator
+     * @param string $prefix
+     * @return array|null
      */
-    public function getRoute()
+    public static function flatTree($categoriesAsTree, $separator = ' / ', $prefix = null)
     {
-        if ($this->getParent())
-        {
-            return $this->getParent()->getName().' -> '.$this->name;
-        }else{
-            return '-';
+        if (!$categoriesAsTree) return null;
+        $tree = array();
+        foreach ($categoriesAsTree as $index => $category) {
+            $name = ($prefix ? $prefix . $separator : '') . $category['name'];
+            $tree[$category['id']] = $name;
+
+            if ($category['children']) {
+                // We prefer to use the Union (+) operator to keep the array keys
+                $tree = $tree + self::flatTree($category['children'], $separator, $name);
+            }
         }
+        return empty($tree) ? null : $tree;
+    }
+
+    /**
+     * Return the array as a simple 1D array with the relationships as text
+     * to be displayed in a dropdown box. ONLY RETURN THE CHILDLESS CATEGORIES.
+     *
+     * @param $categoriesAsTree
+     * @param string $separator
+     * @param string $prefix
+     * @return array
+     */
+    public static function flatTreeOnlyChildless($categoriesAsTree, $separator = ' / ', $prefix = null)
+    {
+        if (!$categoriesAsTree) return null;
+        $tree = array();
+        foreach ($categoriesAsTree as $index => $category) {
+            $name = ($prefix ? $prefix . $separator : '') . $category['name'];
+
+            if ($category['children']) {
+                // We prefer to use the Union (+) operator to keep the array keys
+                $tree = $tree + self::flatTreeOnlyChildless($category['children'], $separator, $name);
+            } else {
+                $tree[$category['id']] = $name;
+            }
+        }
+        return empty($tree) ? null : $tree;
+    }
+
+    /**
+     * Return the array as a simple 1D array with the relationships as text
+     * to display the slug for each one
+     *
+     * @param $categoriesAsTree
+     * @param string $separator
+     * @param string $prefix
+     * @return array|null
+     */
+    public static function flatSlugTree($categoriesAsTree, $separator = '/', $prefix = null)
+    {
+        if (!$categoriesAsTree) return null;
+        $tree = array();
+        foreach ($categoriesAsTree as $index => $category) {
+            $slug = ($prefix ? $prefix . $separator : '') . $category['slug'];
+            $tree[$category['id']] = $slug;
+
+            if ($category['children']) {
+                // We prefer to use the Union (+) operator to keep the array keys
+                $tree = $tree + self::flatSlugTree($category['children'], $separator, $slug);
+            }
+        }
+        return empty($tree) ? null : $tree;
     }
 }

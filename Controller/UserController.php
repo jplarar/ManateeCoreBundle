@@ -50,7 +50,7 @@ class UserController extends Controller
         $user = new User();
 
         // Parse parameters
-        $updateParameters = array('username', 'password', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+        $updateParameters = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
             'zipcode', 'skype');
         foreach ($updateParameters as $p)
         {
@@ -66,14 +66,13 @@ class UserController extends Controller
         $encodedPassword = $encoder->encodePassword($api->getParameter('password'), $user->getSalt());
         $user->setPassword($encodedPassword);
 
-        $user->setRole('ROLE_SUPER_ADMIN');
-
         // Save changes
         $entityManager->persist($user);
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('userId', 'name', 'email', 'username', 'status', 'role', 'formattedTimestamp');
+        $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+            'zipcode', 'skype');
         $data = $api->generateData(array($user), $displayParams);
 
         ## 5. Return payload
@@ -100,8 +99,7 @@ class UserController extends Controller
         $api = new ApiUtility($request);
 
         // Obligatory parameters needed for this operation to succeed.
-        $requestParameters = array('userId');
-        $error = $api->validateRequest($requestParameters);
+        $error = $api->validateRequest();
 
         // Return response
         if($error)
@@ -113,19 +111,12 @@ class UserController extends Controller
         ## 3. Process information
         $entityManager = $this->getDoctrine()->getManager();
 
-        /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $entityManager->getRepository('NivaWolfCoreBundle:User');
-
-        $user = $repository->find($api->getParameter('userId'));
-
-        if(!$user)
-        {
-            $response = $api->generateErrorResponse(6);
-            return $response;
-        }
+        /** @var User $user */
+        $user = $this->getUser();
 
         // Parse parameters
-        $updateParameters = array('name', 'email', 'username', 'status');
+        $updateParameters = array('fullName', 'email', 'phoneNumber', 'country', 'city',
+            'zipcode', 'skype');
 
         foreach ($updateParameters as $p)
         {
@@ -149,7 +140,8 @@ class UserController extends Controller
         $entityManager->flush();
 
         ## 4. Display information
-        $displayParams = array('userId', 'name', 'email', 'username', 'status', 'formattedTimestamp');
+        $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+            'zipcode', 'skype');
         $data = $api->generateData(array($user), $displayParams);
 
         ## 5. Return payload
@@ -157,6 +149,57 @@ class UserController extends Controller
         return $response;
     }
 
+    /**
+     * Specific User entity
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function viewAction(Request $request)
+    {
+        ## 1. Initialization
+        // Enable CORS in this API
+        $response = CorsUtility::createCorsResponse();
+        if (CorsUtility::requiresPreFlight($request)) {
+            return $response;
+        }
 
+        ## 2. Validate request
+        $api = new ApiUtility($request);
+
+        $error = $api->validateRequest();
+
+        // Return response
+        if($error)
+        {
+            $response = $api->generateErrorResponse($error);
+            return $response;
+        }
+
+        ## 3. Process information
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($api->hasParameter('userId')) {
+            /* @var \Doctrine\ORM\EntityRepository $repository */
+            $repository = $entityManager->getRepository('ManateeCoreBundle:User');
+            $user = $repository->find($api->getParameter('userId'));
+            if (!$user) {
+                $response = $api->generateErrorResponse(6);
+                return $response;
+            }
+            $displayParams = array('username', 'fullName', 'country', 'city', 'zipcode');
+        } else {
+            $user = $this->getUser();
+            $displayParams = array('username', 'fullName', 'email', 'phoneNumber', 'country', 'city',
+                'zipcode', 'skype');
+        }
+
+        ## 4. Display information
+        $data = $api->generateData(array($user), $displayParams);
+
+        ## 5. Return payload
+        $response = $api->generateResponse($data);
+        return $response;
+    }
 
 }

@@ -48,6 +48,14 @@ class Listing {
      */
     protected $timestamp;
 
+    /**
+     *  A: active
+     *  S: suspended(paused)
+     *
+     * @ORM\Column(type="string")
+     */
+    private $status;
+
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
@@ -230,8 +238,28 @@ class Listing {
     }
 
     /**
+     * Get Status
+     * @return boolean
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set Status
+     * @param boolean $status
+     * @return Listing
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
      * Get CategoryId
-     * @return \Manatee\CoreBundle\Entity\Segment
+     * @return \Manatee\CoreBundle\Entity\Category
      */
     public function getCategoryId()
     {
