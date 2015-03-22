@@ -250,13 +250,15 @@ class UserController extends Controller
             $listings = $repository->findBy( array(
                 'userId' => $api->getParameter('userId')
             ));
+
+            if(!is_array($listings)){
+                $listings = array();
+            }
         } else {
             $listings = $this->getUser()->getListings();
         }
 
-        if(!is_array($listings)){
-            $listings = array();
-        }
+
 
         ## 4. Process info
         $displayParams = array('name', 'content', 'area',
