@@ -100,7 +100,7 @@ class ReviewController extends Controller
         $api = new ApiUtility($request);
 
         // Obligatory parameters needed for this operation to succeed.
-        $requestParameters = array('content', 'rating');
+        $requestParameters = array('listingId', 'content', 'rating');
 
         $error = $api->validateRequest($requestParameters);
         // Return response
@@ -112,6 +112,20 @@ class ReviewController extends Controller
 
         ## 3. Process information
         $entityManager = $this->getDoctrine()->getManager();
+
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $entityManager->getRepository('ManateeCoreBundle:PointLog');
+        /** @var \Manatee\CoreBundle\Entity\Category $category */
+        $pointLogs = $repository->findBy(array(
+            "userId" => $this->getUser()->getUserId(),
+            "listingId" => $api->getParameter('listingId')
+        ));
+
+        if (!$pointLogs) {
+            $response = $api->generateErrorResponse(16);
+            return $response;
+        }
+
         $review = new Review();
 
         // Parse parameters

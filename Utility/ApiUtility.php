@@ -234,6 +234,9 @@ class ApiUtility
             case 15:
                 $description = 'email already exist';
                 break;
+            case 16:
+                $description = 'need to buy this first';
+                break;
             case 99:
                 $description = 'Unknown internal error';
                 break;
