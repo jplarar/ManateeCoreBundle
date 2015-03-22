@@ -68,8 +68,13 @@ class PointLogController extends Controller
         $sellingUser = $listing->getUserId();
         $sellingUser->addCredits($listing->getPrice());
 
+        $pointLog2 = new PointLog();
+        $pointLog2->setUserId($sellingUser);
+        $pointLog2->setAmount($listing->getPrice());
+
         // Save changes
         $entityManager->persist($pointLog);
+        $entityManager->persist($pointLog2);
         $entityManager->flush();
 
         //TODO: Display data
