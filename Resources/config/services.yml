@@ -1,0 +1,12 @@
+parameters:
+#    niva_wolf_core.example.class: Niva\Wolf\CoreBundle\Example
+
+
+services:
+    manatee_core.api_key_user_provider:
+        class: Manatee\CoreBundle\Security\ApiKeyUserProvider
+        arguments: [ @doctrine ]
+
+    manatee_core.api_key_authenticator:
+        class: Manatee\CoreBundle\Security\ApiKeyAuthenticator
+        arguments: ["@niva_wolf_core.api_key_user_provider"]
