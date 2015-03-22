@@ -59,7 +59,9 @@ ENDSQL;
 
         ## 4. Display information
         $data = array();
-        $data[] = $topUsers;
+        if ($topUsers) {
+            $data[] = $topUsers[0];
+        }
 
         ## 3. Return payload
         $response = $api->generateResponse($data);
@@ -111,7 +113,9 @@ ENDSQL;
 
         ## 4. Display information
         $data = array();
-        $data[] = $topUsers;
+        if ($topUsers) {
+            $data[] = $topUsers[0];
+        }
 
         ## 5. Return payload
         $response = $api->generateResponse($data);
