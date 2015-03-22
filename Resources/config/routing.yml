@@ -91,3 +91,15 @@ manatee_api_review_new:
 manatee_api_category_list:
     pattern:    /api/category/list
     defaults:   { _controller: ManateeCoreBundle:Category:list }
+
+## Leaderboard
+
+# listing
+manatee_api_leaderboard_listings:
+    pattern:    /api/leaderboard/listings
+    defaults:   { _controller: ManateeCoreBundle:Leaderboard:listings }
+
+# Users
+manatee_api_leaderboards_users:
+    pattern:    /api/leaderboard/users
+    defaults:   { _controller: ManateeCoreBundle:Leaderboard:users }
