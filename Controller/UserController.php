@@ -210,7 +210,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function userListingsAction(Request $request)
+    public function listingsAction(Request $request)
     {
 
         ## 1. Initialization
