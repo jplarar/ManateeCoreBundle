@@ -18,9 +18,9 @@ class CreateAdminCommand extends ContainerAwareCommand
             ->setName('manatee:create:user')
             ->setDescription("Create a new user for Manatee")
             ->addArgument(
-                'username',
+                'email',
                 InputArgument::REQUIRED,
-                'Username'
+                'email'
             )
             ->addArgument(
                 'password',
@@ -39,7 +39,7 @@ class CreateAdminCommand extends ContainerAwareCommand
         $em = $doctrine->getManager();
 
         // Load command arguments
-        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
         $password = $input->getArgument('password');
 
         // Load security encoder
@@ -48,8 +48,8 @@ class CreateAdminCommand extends ContainerAwareCommand
         // Create user
         $user = new User();
 
-        $user->setUsername($username);
-        $user->setFullName($username);
+        $user->setEmail($email);
+        $user->setFullName($email);
         $user->setRole('ROLE_USER');
         $user->setIsActive(1);
 
@@ -62,6 +62,6 @@ class CreateAdminCommand extends ContainerAwareCommand
         $em->persist($user);
         $em->flush();
 
-        $output->writeln("Created ROLE_USER user <info>" . $username . "</info> successfully!");
+        $output->writeln("Created ROLE_USER user <info>" . $email . "</info> successfully!");
     }
 }
