@@ -47,6 +47,16 @@ class UserController extends Controller
 
         ## 3. Process information
         $entityManager = $this->getDoctrine()->getManager();
+
+        /* @var \Doctrine\ORM\EntityRepository $repository */
+        $repository = $entityManager->getRepository('ManateeCoreBundle:User');
+        $user = $repository->find($api->getParameter('userId'));
+
+        if ($user) {
+            $response = $api->generateErrorResponse(15);
+            return $response;
+        }
+
         $user = new User();
 
         // Parse parameters

@@ -231,6 +231,9 @@ class ApiUtility
             case 14:
                 $description = 'insufficient credits';
                 break;
+            case 15:
+                $description = 'email already exist';
+                break;
             case 99:
                 $description = 'Unknown internal error';
                 break;
