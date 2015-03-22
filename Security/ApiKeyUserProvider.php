@@ -55,7 +55,7 @@ class ApiKeyUserProvider implements UserProviderInterface
     {
         /** @var \Manatee\CoreBundle\Entity\User $user */
         $user = $this->doctrine->getRepository("ManateeCoreBundle:User")->findOneBy(array(
-            'username' => $username
+            'email' => $username
         ));
 
         if (!$user) {
